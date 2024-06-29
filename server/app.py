@@ -38,40 +38,40 @@ def get_restaurant(restaurants):
     status=200
     return make_response(jsonify(restaurants_list),status)
 
-# @app.route('/restaurants/<int:id>')
-# def get_restaurant_by_id(id):
-#     restaurant=RestaurantPizza.query.get(id)
-#     if restaurant is None:
-#         response_body={'error':'Restaurant not found'}
-#         status=404
+@app.route('/restaurants/<int:id>')
+def get_restaurant_by_id(id):
+    restaurant=RestaurantPizza.query.get(id)
+    if restaurant is None:
+        response_body={'error':'Restaurant not found'}
+        status=404
 
-#     restaurant_pizzas=RestaurantPizza.query.filter_by(restaurant_id=id).all()
-#     pizzas_list=[]
+    restaurant_pizzas=RestaurantPizza.query.filter_by(restaurant_id=id).all()
+    pizzas_list=[]
 
-#     for rpizza in restaurant_pizzas:
-#         pizza=Pizza.query.get(rpizza.pizza_id)
-#         pizza_data={
-#             "id":pizza.id,
-#             "ingredients":pizza.ingredients,
-#             "name":pizza.name
-#         }
-#         rpizza_data={
-#             "id":rpizza.id,
-#             "pizza":pizza_data,
-#             "pizza_id":rpizza.pizza_id,
-#             "price":rpizza.price,
-#             "restaurant_id":rpizza.restaurant_id
-#         }
-#         pizzas_list.append(rpizza_data)
+    for rpizza in restaurant_pizzas:
+        pizza=Pizza.query.get(rpizza.pizza_id)
+        pizza_data={
+            "id":pizza.id,
+            "ingredients":pizza.ingredients,
+            "name":pizza.name
+        }
+        rpizza_data={
+            "id":rpizza.id,
+            "pizza":pizza_data,
+            "pizza_id":rpizza.pizza_id,
+            "price":rpizza.price,
+            "restaurant_id":rpizza.restaurant_id
+        }
+        pizzas_list.append(rpizza_data)
 
-#     response_body={
-#      "address":restaurant.address,
-#      "id":restaurant.id,
-#      "name":restaurant.name,
-#      "restaurant_pizzas":pizzas_list
-#      }
-#     status=200
-#     return make_response(jsonify(response_body),status)
+    response_body={
+     "address":restaurant.address,
+     "id":restaurant.id,
+     "name":restaurant.name,
+     "restaurant_pizzas":pizzas_list
+     }
+    status=200
+    return make_response(jsonify(response_body),status)
 
 # @app.route('/restaurants/<int:id>',methods=['GET','DELETE'])
 # def delete_restaurant(id):
