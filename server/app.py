@@ -90,19 +90,19 @@ def delete_restaurant(id):
         status=200
         return make_response(jsonify(response_body),status)
 
-# @app.route('/pizzas') 
-# def get_pizzas():
-#     pizzas=Pizza.query.all()
-#     pizzas_list=[]
-#     for pizza in pizzas:
-#      pizza_dict={
-#         "id":pizza.id,
-#         "ingredients":pizza.ingredients,
-#         "name":pizza.name
-#      }
-#     pizzas_list.append(pizza_dict)
-#     status=200
-#     return make_response(jsonify(pizzas_list),status)
+@app.route('/pizzas') 
+def get_pizzas():
+    pizzas=Pizza.query.all()
+    pizzas_list=[]
+    for pizza in pizzas:
+     pizza_dict={
+        "id":pizza.id,
+        "ingredients":pizza.ingredients,
+        "name":pizza.name
+     }
+    pizzas_list.append(pizza_dict)
+    status=200
+    return make_response(jsonify(pizzas_list),status)
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
