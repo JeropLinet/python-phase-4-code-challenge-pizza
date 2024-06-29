@@ -73,22 +73,22 @@ def get_restaurant_by_id(id):
     status=200
     return make_response(jsonify(response_body),status)
 
-# @app.route('/restaurants/<int:id>',methods=['GET','DELETE'])
-# def delete_restaurant(id):
-#     restaurant=Restaurant.query.filter(Restaurant.id == id).first()
-#     if restaurant is None:
-#         response_body={"error":"Restaurant not found"}
-#         status=404
-#         return make_response(jsonify(response_body),status)
-#     if request.method == 'GET':
-#         restaurant_dict=restaurant.to_dict()
-#         return make_response(jsonify(restaurant_dict))
-#     elif request.method == 'DELETE':
-#         db.session.delete(restaurant)
-#         db.session.commit()
-#         response_body={"message":"Restaurant deleted"}
-#         status=200
-#         return make_response(jsonify(response_body),status)
+@app.route('/restaurants/<int:id>',methods=['GET','DELETE'])
+def delete_restaurant(id):
+    restaurant=Restaurant.query.filter(Restaurant.id == id).first()
+    if restaurant is None:
+        response_body={"error":"Restaurant not found"}
+        status=404
+        return make_response(jsonify(response_body),status)
+    if request.method == 'GET':
+        restaurant_dict=restaurant.to_dict()
+        return make_response(jsonify(restaurant_dict))
+    elif request.method == 'DELETE':
+        db.session.delete(restaurant)
+        db.session.commit()
+        response_body={"message":"Restaurant deleted"}
+        status=200
+        return make_response(jsonify(response_body),status)
 
 # @app.route('/pizzas') 
 # def get_pizzas():
