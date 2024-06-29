@@ -24,19 +24,19 @@ api = Api(app)
 def index():
     return "<h1>Code challenge</h1>"
 
-# @app.route("/restaurants")
-# def get_restaurant(restaurants):
-#     restaurants=Restaurant.query.all()
-#     restaurants_list=[]
-#     for restaurant in restaurants:
-#         restaurant_dict={
-#           "address":restaurant.address,
-#           "id":restaurant.id,
-#           "name":restaurant.name 
-#         }
-#         restaurants_list.append(restaurant_dict)
-#     status=200
-#     return make_response(jsonify(restaurants_list),status)
+@app.route("/restaurants")
+def get_restaurant(restaurants):
+    restaurants=Restaurant.query.all()
+    restaurants_list=[]
+    for restaurant in restaurants:
+        restaurant_dict={
+          "address":restaurant.address,
+          "id":restaurant.id,
+          "name":restaurant.name 
+        }
+        restaurants_list.append(restaurant_dict)
+    status=200
+    return make_response(jsonify(restaurants_list),status)
 
 # @app.route('/restaurants/<int:id>')
 # def get_restaurant_by_id(id):
