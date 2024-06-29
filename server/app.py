@@ -104,5 +104,43 @@ def get_pizzas():
     status=200
     return make_response(jsonify(pizzas_list),status)
 
+@app.route('/restaurant_pizzas',methods=['POST'])
+def handle_rpizza():
+    new_rpizza=RestaurantPizza(
+        price=request.form.get("price"),
+        pizza_id=request.form.get("pizza_id"),
+        restaurant_id=request.form.get("restaurant_id"),
+    )
+    pizza=Pizza.query.get(new_rpizza.pizza_id)
+    restaurant=Restaurant.query.get(new_rpizza.restaurant_id)
+
+    if not pizza or restaurant:
+        response_body={
+            "errors":"Sorry Pizza or Restaurant not found"
+        }
+        status=404
+        return make_response(jsonify(response_body),status)
+    db.session.add(new_rpizza)
+    db.session.commit()
+
+    response_body={
+        "id":new_rpizza.id,
+        "pizza":{
+              "id":pizza.id,
+              "ingredients":pizza.ingredients,
+              "name":pizza.name
+            },
+        "pizza_id":new_rpizza.pizza_id,
+        "price":new_rpizza.price,
+        "restaurant":{
+            "address":restaurant.address,
+            "id":restaurant.id,
+            "name":restaurant.name
+            },
+        "restaurant_id":new_rpizza.restaurant_id
+    }
+    status=200
+    return make_response(jsonify(response_body),status)
+    
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
