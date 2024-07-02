@@ -21,11 +21,11 @@ class Restaurant(db.Model, SerializerMixin):
     address = db.Column(db.String)
 
     # add relationship
-    pizzas=db.relationship('RestaurantPizza',back_populates='restaurant',cascade='all,delete-orphan')
+    restaurant_pizzas=db.relationship('RestaurantPizza',back_populates='restaurant',cascade='all,delete-orphan')
 
     pizzas_proxy=association_proxy('restaurant_pizza','pizza')
     # add serialization rules
-    serialize_rules=('-pizzas.restaurant',)
+    serialize_rules=('-restaurant_pizzas.restaurant',)
 
     def __repr__(self):
         return f"<Restaurant {self.name}>"
@@ -39,11 +39,11 @@ class Pizza(db.Model, SerializerMixin):
     ingredients = db.Column(db.String)
 
     # add relationship
-    restaurants=db.relationship('RestaurantPizza',back_populates='pizza',cascade='all,delete-orphan')
+    restaurant_pizzas=db.relationship('RestaurantPizza',back_populates='pizza',cascade='all,delete-orphan')
 
-    restaurants_proxy=association_proxy('restaurant_pizza','restaurant')
+    restaurants_proxy=association_proxy('restaurant_pizzas','restaurant')
     # add serialization rules
-    serialize_rules=('-restaurants.pizza',)
+    serialize_rules=('-restaurant_pizzas.pizza',)
     def __repr__(self):
         return f"<Pizza {self.name}, {self.ingredients}>"
 
@@ -59,13 +59,12 @@ class RestaurantPizza(db.Model, SerializerMixin):
     restaurant=db.relationship('Restaurant',back_populates='restaurant_pizzas')
     pizza=db.relationship('Pizza',back_populates='restaurant_pizzas')
     # add serialization rules
-    serialize_rules=('-restaurant.pizzas','-pizza.restaurants')
+    serialize_rules=('-restaurant.restaurant_pizzas','-pizza.restaurant_pizzas')
     # add validation
     @validates('price')
-    def validate_price(self,price):
-        if not 1<= price >=30:
-            raise ValueError('Price must range between 1 and 30')
-        else:
-            return price
+    def validate_price(self,key,price):
+        if  (1< price >30):
+           raise ValueError('Price must range between 1 and 30')
+        return price
     def __repr__(self):
         return f"<RestaurantPizza ${self.price}>"

@@ -24,9 +24,11 @@ api = Api(app)
 def index():
     return "<h1>Code challenge</h1>"
 
-@app.route("/restaurants")
-def get_restaurant(restaurants):
+@app.route('/restaurants',methods=['GET'])
+def get_restaurant():
     restaurants=Restaurant.query.all()
+    print("Restaurants found:",restaurants)
+  
     restaurants_list=[]
     for restaurant in restaurants:
         restaurant_dict={
@@ -93,14 +95,17 @@ def delete_restaurant(id):
 @app.route('/pizzas') 
 def get_pizzas():
     pizzas=Pizza.query.all()
+    print("Pizzas found:",pizzas)
+    if not pizzas:
+        return jsonify({"message":"No pizzas found"}),404
     pizzas_list=[]
     for pizza in pizzas:
-     pizza_dict={
+        pizza_dict={
         "id":pizza.id,
         "ingredients":pizza.ingredients,
         "name":pizza.name
-     }
-    pizzas_list.append(pizza_dict)
+        }
+        pizzas_list.append(pizza_dict)
     status=200
     return make_response(jsonify(pizzas_list),status)
 

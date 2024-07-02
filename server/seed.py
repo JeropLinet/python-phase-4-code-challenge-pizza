@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+import sqlite3
+
+# Manually set the version variable if it is not defined
+if not hasattr(sqlite3, 'version'):
+    sqlite3.version = "3.35.5"  # Set this to the appropriate version
 
 from app import app
 from models import db, Restaurant, Pizza, RestaurantPizza
