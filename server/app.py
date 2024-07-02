@@ -42,11 +42,11 @@ def get_restaurant():
 
 @app.route('/restaurants/<int:id>')
 def get_restaurant_by_id(id):
-    restaurant=RestaurantPizza.query.get(id)
+    restaurant=Restaurant.query.get(id)
     if restaurant is None:
         response_body={'error':'Restaurant not found'}
         status=404
-
+        return make_response(jsonify(response_body),status)
     restaurant_pizzas=RestaurantPizza.query.filter_by(restaurant_id=id).all()
     pizzas_list=[]
 
@@ -67,9 +67,9 @@ def get_restaurant_by_id(id):
         pizzas_list.append(rpizza_data)
 
     response_body={
-     "address":restaurant.address,
-     "id":restaurant.id,
+      "id":restaurant.id,
      "name":restaurant.name,
+     "address":restaurant.address,
      "restaurant_pizzas":pizzas_list
      }
     status=200
