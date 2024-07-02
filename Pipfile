@@ -13,6 +13,11 @@ ipdb = "0.13.9"
 pytest = "7.1.3"
 sqlalchemy-serializer = "*"
 flask-restful = "*"
+Werkzeug = "2.2.2"
+itsdangerous = "2.1.2"
+Jinja2 = "3.1.2"
+MarkupSafe = "2.1.1"
+SQLAlchemy = "1.4.46"
 
 [requires]
 python_full_version = "3.10.12"
